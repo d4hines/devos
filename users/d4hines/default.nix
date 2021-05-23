@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 {
   home-manager.users.d4hines = { suites, ... }: {
     imports = suites.base;

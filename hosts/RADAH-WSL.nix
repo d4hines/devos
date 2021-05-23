@@ -1,4 +1,4 @@
-{ lib, pkgs, config, modulesPath, ... }:
+{ lib, pkgs, config, modulesPath, suites, ... }:
 
 with lib;
 
@@ -18,6 +18,7 @@ let
   };
 in
 {
+  imports = suites.base;
   # WSL is closer to a container than anything else
   boot.isContainer = true;
 
@@ -26,16 +27,9 @@ in
 
   networking.dhcpcd.enable = false;
 
-  users.users.${defaultUser} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" ];
-  };
-
-  users.users.root = {
-    shell = "${syschdemd}/bin/syschdemd";
-    # Otherwise WSL fails to login as root with "initgroups failed 5"
-    extraGroups = [ "root" ];
-  };
+  users.users.root.shell = "${syschdemd}/bin/syschdemd";
+  # Otherwise WSL fails to login as root with "initgroups failed 5"
+  users.users.root. extraGroups = [ "root" ];
 
   security.sudo.wheelNeedsPassword = false;
 
