@@ -1,4 +1,8 @@
 {
+  programs.vscode = {
+    enable = true;
+  };
+
   programs.git = {
     enable = true;
 
@@ -41,5 +45,17 @@
       # delete merged branches
       bdm = "!git branch --merged | grep -v '*' | xargs -n 1 git branch -d";
     };
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
+  programs.brave = {
+    enable = true;
+    extensions = [
+      { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
+    ];
   };
 }
