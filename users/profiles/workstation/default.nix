@@ -1,4 +1,45 @@
+{ self, config, lib, pkgs, ... }:
+let inherit (lib) fileContents;
+
+in
+# let inherit (lib) fileContents;
+#   direnvAliasesLib = fileContents ./direnv_aliases_lib.sh;
+# in
 {
+
+  home.packages = with pkgs; [
+    slack
+    discord
+    signal-desktop
+    gparted
+  ];
+
+  #  
+  home.file.".bash/def.shlib" = {
+    text = (fileContents ./def.shlib);
+    executable = true;
+  };
+
+  programs.bash = {
+    enable = true;
+    bashrcExtra = ''
+    function direnv-reset-def() {
+        eval "''${DIRENV_RESET_DEF}"
+      }
+
+      function direnv-set-def() {
+        eval "''${DIRENV_SET_DEF}"
+      }
+
+      eval "$(direnv hook bash)"
+      export PROMPT_COMMAND="direnv-reset-def;''${PROMPT_COMMAND};direnv-set-def"
+    '';
+  };
+  
+      
+
+  programs.obs-studio.enable = true;
+
   programs.vscode = {
     enable = true;
   };
@@ -52,10 +93,13 @@
     nix-direnv.enable = true;
   };
 
-  programs.brave = {
+  programs.chromium = {
     enable = true;
     extensions = [
       { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
+      { id = "hdokiejnpimakedhajhdlcegeplioahd"; }
     ];
   };
+
+
 }

@@ -1,0 +1,69 @@
+function is-def() {
+  flag=$1
+  name=$2
+
+  case "${flag}" in
+    -a)
+      [[ "$(type -t ${name} 2>/dev/null)" == 'alias' ]]
+      ;;
+
+    -f)
+      [[ "$(type -t ${name} 2>/dev/null)" == 'function' ]]
+      ;;
+
+    -v)
+      [[ -n "${!name+defined}" ]]
+      ;;
+  esac
+}
+
+function get-set-def() {
+  flag=$1
+  name=$2
+  
+  local def
+  case "${flag}" in
+    -a)
+      alias ${name}
+      ;;
+    
+    -f)
+      declare -f ${name}
+      ;;
+    
+    -v)
+      echo "${name}=${!name})"
+      ;;
+  esac 
+}
+
+function get-unset-def() {
+  flag=$1
+  name=$2
+
+  case "${flag}" in
+    -a)
+      echo "unalias ${name}"
+      ;;
+
+    -f)
+      echo "unset -f ${name}"
+      ;;
+
+    -v)
+      echo "unset ${name}"
+      ;;
+  esac
+}
+
+function get-reset-def() {
+  flag=$1
+  varname=$2
+
+  if is-def ${flag} ${varname}
+  then
+    get-set-def ${flag} ${varname}
+  else
+    get-unset-def ${flag} ${varname}
+  fi
+} 

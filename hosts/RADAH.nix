@@ -52,7 +52,7 @@
   # Include system packages to help debug
   # if something goes wrong
   environment.systemPackages = with pkgs; [
-    wget vim firefox git
+    wget vim git
   ];
 
   # This value determines the NixOS release from which the default
