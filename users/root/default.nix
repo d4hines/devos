@@ -1,5 +1,5 @@
-{ ... }:
-# recommend using `hashedPassword`
+{ lib, ... }:
 {
-  users.users.root.password = "";
+
+  users.users.root.hashedPassword = lib.fileContents ../../secrets/userPass;
 }
