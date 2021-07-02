@@ -12,6 +12,11 @@ in
     discord
     signal-desktop
     gparted
+    cloc
+    xflux-gui
+    zoom-us
+
+    aerc
   ];
 
   #  
@@ -96,8 +101,11 @@ in
   programs.chromium = {
     enable = true;
     extensions = [
+      # Dark Reader and LastPass
       { id = "eimadpbcbfnmbkopoojfekhnkhdbieeh"; }
       { id = "hdokiejnpimakedhajhdlcegeplioahd"; }
+      # Roam Toolkit
+      { id = "ebckolanhdjilblnkcgcgifaikppnhba"; }
     ];
   };
 
