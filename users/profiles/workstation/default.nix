@@ -1,10 +1,23 @@
 { self, config, lib, pkgs, ... }:
+
 let inherit (lib) fileContents;
+
+
+  weechat = pkgs.weechat.override {
+    configure = { availablePlugins, ... }: {
+      scripts = with pkgs.weechatScripts; [
+        wee-slack
+      ];
+      init = ''
+        /slack register ${fileContents ../../secrets/slackToken}
+      '';
+    };
+  };
 
 in
 # let inherit (lib) fileContents;
-#   direnvAliasesLib = fileContents ./direnv_aliases_lib.sh;
-# in
+  #   direnvAliasesLib = fileContents ./direnv_aliases_lib.sh;
+  # in
 {
 
   home.packages = with pkgs; [
@@ -16,10 +29,10 @@ in
     xflux-gui
     zoom-us
 
+    weechat
     aerc
   ];
 
-  #  
   home.file.".bash/def.shlib" = {
     text = (fileContents ./def.shlib);
     executable = true;
@@ -28,20 +41,20 @@ in
   programs.bash = {
     enable = true;
     bashrcExtra = ''
-    function direnv-reset-def() {
-        eval "''${DIRENV_RESET_DEF}"
-      }
+      function direnv-reset-def() {
+          eval "''${DIRENV_RESET_DEF}"
+        }
 
-      function direnv-set-def() {
-        eval "''${DIRENV_SET_DEF}"
-      }
+        function direnv-set-def() {
+          eval "''${DIRENV_SET_DEF}"
+        }
 
-      eval "$(direnv hook bash)"
-      export PROMPT_COMMAND="direnv-reset-def;''${PROMPT_COMMAND};direnv-set-def"
+        eval "$(direnv hook bash)"
+        export PROMPT_COMMAND="direnv-reset-def;''${PROMPT_COMMAND};direnv-set-def"
     '';
   };
-  
-      
+
+
 
   programs.obs-studio.enable = true;
 
@@ -106,8 +119,8 @@ in
       { id = "hdokiejnpimakedhajhdlcegeplioahd"; }
       # Roam Toolkit
       { id = "ebckolanhdjilblnkcgcgifaikppnhba"; }
+      # tab-less
+      { id = "mdndkociaebjkggmhnemegoegnbfbgoo"; }
     ];
   };
-
-
 }
