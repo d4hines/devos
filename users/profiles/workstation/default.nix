@@ -9,15 +9,12 @@ let inherit (lib) fileContents;
         wee-slack
       ];
       init = ''
-        /slack register ${fileContents ../../secrets/slackToken}
+        /slack register ${fileContents ../../../secrets/slackToken}
       '';
     };
   };
 
 in
-# let inherit (lib) fileContents;
-  #   direnvAliasesLib = fileContents ./direnv_aliases_lib.sh;
-  # in
 {
 
   home.packages = with pkgs; [
