@@ -1,9 +1,10 @@
 # Config for bare-metal NixOS installation
 
 { config, lib, pkgs, modulesPath, suites, ... }:
-{ 
+{
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       (modulesPath + "/installer/scan/not-detected.nix")
     ] ++ suites.base;
 
@@ -15,12 +16,14 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6beba1cb-9a62-41df-a924-aca556c06450";
+    {
+      device = "/dev/disk/by-uuid/6beba1cb-9a62-41df-a924-aca556c06450";
       fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/41BB-3572";
+    {
+      device = "/dev/disk/by-uuid/41BB-3572";
       fsType = "vfat";
     };
 
@@ -40,19 +43,21 @@
   networking.useDHCP = false;
   networking.interfaces.enp39s0.useDHCP = true;
   networking.interfaces.wlp41s0.useDHCP = true;
-  
-  services.xserver.enable = true;
-  services.xserver.layout = "us";
-  services.xserver.xkbOptions = "caps:swapescape";
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+
+  # services.xserver.enable = true;
+  # services.xserver.layout = "us";
+  # services.xserver.xkbOptions = "caps:swapescape";
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
   # Include system packages to help debug
   # if something goes wrong
   environment.systemPackages = with pkgs; [
-    wget vim git
+    wget
+    vim
+    git
   ];
 
   # This value determines the NixOS release from which the default

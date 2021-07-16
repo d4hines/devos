@@ -152,5 +152,28 @@ in
   };
 
   services.earlyoom.enable = true;
+  services.gnome3.gnome-keyring.enable = true;
+  services.dbus = {
+    enable = true;
+    socketActivated = true;
+    packages = [ pkgs.gnome3.dconf ];
+  };
+  services.xserver = {
+    enable = true;
+    layout = "us";
 
+    libinput = {
+      enable = true;
+      disableWhileTyping = true;
+    };
+
+    displayManager.defaultSession = "none+xmonad";
+
+    windowManager.xmonad = {
+      enable = true;
+      enableContribAndExtras = true;
+    };
+
+    xkbOptions = "caps:swapescape";
+  };
 }

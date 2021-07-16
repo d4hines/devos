@@ -17,6 +17,7 @@ let inherit (lib) fileContents;
 in
 {
 
+
   home.packages = with pkgs; [
     slack
     discord
@@ -25,6 +26,9 @@ in
     cloc
     xflux-gui
     zoom-us
+
+    niv
+    nixfmt
 
     weechat
     aerc
